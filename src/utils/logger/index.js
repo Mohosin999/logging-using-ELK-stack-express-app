@@ -8,15 +8,20 @@ const consoleTransport = new transports.Console({
 });
 
 // File transport
-const fileTransport = new transports.File({
-  level: "info",
-  format: combine(timestamp(), json()),
-  filename: "logs/info/info.log",
-});
+const fileTransport = (level, filename) => {
+  return new transports.File({
+    level: level || "info",
+    format: combine(timestamp(), json()),
+    filename: filename || "logs/info/info.log",
+  });
+};
+
+const infoFileTransport = fileTransport("info", "logs/info/info.log");
+const errorFileTransport = fileTransport("error", "logs/error/error.log");
 
 const logger = createLogger({
   level: "info",
-  transports: [consoleTransport, fileTransport],
+  transports: [consoleTransport, infoFileTransport, errorFileTransport],
 });
 
 module.exports = logger;
