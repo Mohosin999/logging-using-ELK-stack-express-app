@@ -1,11 +1,14 @@
 const express = require("express");
 const app = express();
 const userRouter = require("./routes");
+const logger = require("./utils/logger");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(userRouter);
+
+logger.info("Application started");
 
 app.use((error, req, res, _next) => {
   const errorObj = {

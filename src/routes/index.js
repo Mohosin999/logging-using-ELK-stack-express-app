@@ -4,8 +4,8 @@ const router = Router();
 
 router.get("/users", (_req, res) => {
   res.json({
-    name: "Rasel",
-    age: 23,
+    name: "Mohammad Mohosin",
+    age: 27,
   });
 });
 
