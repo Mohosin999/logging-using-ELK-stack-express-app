@@ -8,8 +8,6 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(userRouter);
 
-logger.info("Application started");
-
 app.use((error, req, res, _next) => {
   const errorObj = {
     message: error?.message || "Something went wrong",
