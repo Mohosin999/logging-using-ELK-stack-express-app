@@ -1,6 +1,7 @@
 const express = require("express");
 const userRouter = require("./routes");
 const logger = require("./utils/logger");
+const correlationId = require("./middlewares/setCorrelationId");
 const {
   expressInfoLogger,
   expressErrorLogger,
@@ -12,6 +13,8 @@ const app = express();
 // middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(correlationId);
 
 // express winston info logger
 app.use(expressInfoLogger);
@@ -29,7 +32,7 @@ app.use((error, req, res, _next) => {
     status: error?.status || 500,
   };
 
-  logger.error(JSON.stringify(errorObj));
+  // logger.error(JSON.stringify(errorObj));
 
   res.status(errorObj.status).json(errorObj);
 });

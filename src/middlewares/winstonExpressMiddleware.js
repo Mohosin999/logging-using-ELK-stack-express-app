@@ -3,7 +3,11 @@ const logger = require("../utils/logger");
 
 const expressWinstonLogger = (level) => {
   return expressWinston.logger({
-    level: level || "info",
+    level: (_req, res) => {
+      if (res.statusCode >= 500) return "error";
+      if (res.statusCode >= 400) return "warn";
+      return "info";
+    },
     winstonInstance: logger,
     meta: true,
     msg: "HTTP {{req.method}} {{req.url}} {{res.responseTime}}",
