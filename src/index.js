@@ -1,13 +1,27 @@
 const express = require("express");
-const app = express();
 const userRouter = require("./routes");
 const logger = require("./utils/logger");
+const {
+  expressInfoLogger,
+  expressErrorLogger,
+} = require("./middlewares/winstonExpressMiddleware");
 
+// express app
+const app = express();
+
+// middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// express winston info logger
+app.use(expressInfoLogger);
+
 app.use(userRouter);
 
+// express winston error logger
+app.use(expressErrorLogger);
+
+// error handler
 app.use((error, req, res, _next) => {
   const errorObj = {
     message: error?.message || "Something went wrong",
@@ -20,6 +34,7 @@ app.use((error, req, res, _next) => {
   res.status(errorObj.status).json(errorObj);
 });
 
+// start server
 app.listen(4000, () => {
   console.log("http://localhost:4000");
 });

@@ -24,7 +24,8 @@ const fileTransport = (level, filename) => {
     filename: filename || "info-%DATE%.log",
     zippedArchive: true,
     maxSize: "20m",
-    maxFiles: "14d",
+    maxFiles: "1d",
+    // maxFiles: "14d",
   });
 };
 
