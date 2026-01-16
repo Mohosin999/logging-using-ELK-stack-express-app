@@ -1,4 +1,4 @@
-// You can create this ID using UUID (no matter actually)
+// Simple id generator
 
 const setCorrelationId = (req, res, next) => {
   const key = "x-correlation-id";
